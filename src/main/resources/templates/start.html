@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start page</title>
+</head>
+<body>
+    Start page
+
+    <form action="#" th:action="@{/start/saveNewArticle.html}" th:object="${articleDTO}" method="post">
+        <p>Article name: <input type="text" th:field="*{articleName}" /></p>
+        <p>Article description: <input type="text" th:field="*{articleDescription}" /></p>
+        <p>Article price: <input type="number" th:field="*{articlePrice}" /></p>
+        <p>Category name:
+            <select th:field="*{categoryName}">
+                <option th:each="cat : ${categoryList}" th:value="${cat}" th:text="${cat}">
+                </option>
+            </select>
+        </p>
+        <p><input type="submit" value="Save" /> <input type="reset" value="Reset" /></p>
+    </form>
+
+</body>
+</html>
