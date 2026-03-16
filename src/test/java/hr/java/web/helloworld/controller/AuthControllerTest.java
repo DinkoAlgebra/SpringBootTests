@@ -56,7 +56,8 @@ class AuthControllerTest {
     refreshTokenRequestDTO = new RefreshTokenRequestDTO();
     refreshTokenRequestDTO.setToken("refresh-token");
   }
-
+// simulate a successful login...authenticationManager return an authenticated object.
+// services return a fake JWT string ("jwt-token") and a fake Refresh Token object.
   @Test
   void testAuthenticateAndGetToken_Success() {
     Authentication authentication = mock(Authentication.class);
@@ -97,6 +98,7 @@ class AuthControllerTest {
     UserInfo userInfo = new UserInfo(1l, "user", "password", Set.of());
     refreshToken.setUserInfo(userInfo);
 
+    //Find token in DB, verify it hasn't expired and generate a new JWT.
     when(refreshTokenService.findByToken(anyString())).thenReturn(Optional.of(refreshToken));
     when(refreshTokenService.verifyExpiration(any(RefreshToken.class))).thenReturn(refreshToken);
     when(jwtService.generateToken(anyString())).thenReturn("new-jwt-token");
